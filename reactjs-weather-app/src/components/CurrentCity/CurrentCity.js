@@ -55,7 +55,7 @@ function CurrentCity() {
         />
       </form>
       <img
-        src={`http://openweathermap.org/img/wn/${currentWeatherData.icon}@2x.png`}
+        src={`https://openweathermap.org/img/wn/${currentWeatherData.icon}@2x.png`}
         alt='weather-status'
       />
       <div className={classes.temp}>

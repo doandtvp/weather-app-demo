@@ -53,7 +53,7 @@ function WeekWeather() {
               </p>
               <div className={classes['weather-boxs__img']}>
                 <img
-                  src={`http://openweathermap.org/img/w/${daily.weather[0].icon}.png`}
+                  src={`https://openweathermap.org/img/w/${daily.weather[0].icon}.png`}
                   alt='img'
                 />
                 <p className={classes.temp}>
