@@ -1,0 +1,23 @@
+.container {
+  max-width: 1140px;
+  height: 90vh;
+  background-color: rgb(246, 246, 248);
+  margin: 30px auto;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', sans-serif;
+  overflow: hidden !important;
+}
+
+@media all and (max-width: 765px) {
+  .container {
+    display: block;
+    max-width: 540px;
+    margin: 0 auto;
+    overflow: scroll !important;
+  }
+
+  .boxs {
+    width: 100%;
+  }
+}

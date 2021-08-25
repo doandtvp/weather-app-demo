@@ -1,0 +1,17 @@
+.weather-content {
+  width: 75%;
+  background-color: rgb(246, 246, 248);
+  box-sizing: border-box;
+  padding: 24px;
+  height: 90vh;
+  overflow: auto !important;
+  position: relative;
+}
+
+@media all and (max-width: 765px) {
+  .weather-content {
+    width: 100%;
+    height: auto !important;
+    position: static !important;
+  }
+}
