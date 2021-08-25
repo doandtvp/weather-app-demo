@@ -57,10 +57,12 @@
 }
 
 .weather-img {
-  text-align: center;
   width: 100%;
   height: auto;
   position: relative;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .weather-img img {
@@ -69,11 +71,8 @@
   border-radius: 0.25rem;
 }
 
-.weather-img p {
+.weather-img div {
   position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
   color: white;
   font-size: calc(1.3rem + 0.6vw);
   font-weight: 700;

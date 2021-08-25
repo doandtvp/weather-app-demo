@@ -77,8 +77,10 @@ function CurrentCity() {
       </div>
 
       <div className={classes['weather-img']}>
+        <div>
+          <p>{cityName}</p>
+        </div>
         <img src={heavyRain} alt='weather-img' />
-        <p>{cityName}</p>
       </div>
     </div>
   );
