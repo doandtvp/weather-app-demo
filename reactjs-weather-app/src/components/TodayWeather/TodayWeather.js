@@ -1,16 +1,14 @@
 import React from 'react';
 import classes from './TodayWeather.module.css';
 import useConvertTime from '../../hooks/use-convert-time';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux-zero/react';
 import { FiSun } from 'react-icons/fi';
 import { WiDayWindy, WiSunrise, WiSunset, WiHumidity } from 'react-icons/wi';
 import { IoMdSpeedometer } from 'react-icons/io';
 import { FaThermometerEmpty } from 'react-icons/fa';
 
 function TodayWeather() {
-  const todayWeatherData = useSelector(
-    (state) => state.weeklyWeather.todayWeather
-  );
+  const todayWeatherData = useSelector((state) => state.todayWeather);
 
   const sunrise_timestamp = useConvertTime(todayWeatherData.sunrise);
   const sunset_timestamp = useConvertTime(todayWeatherData.sunset);

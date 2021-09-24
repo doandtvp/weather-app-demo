@@ -1,12 +1,10 @@
 import React from 'react';
 import classes from './WeatherChart.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux-zero/react';
 import { Line } from 'react-chartjs-2';
 
 function WeatherChart() {
-  const hourlyWeatherData = useSelector(
-    (state) => state.weeklyWeather.hourlyWeather
-  );
+  const hourlyWeatherData = useSelector((state) => state.hourlyWeather);
 
   const temp = [];
   const feel = [];

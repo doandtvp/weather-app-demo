@@ -1,18 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-import currentWeatherSlice from './current-weather-slice';
-import weeklyWeatherSlice from './weekly-weather-slice';
-import searchSlice from './search-slice';
-import coordSlice from './get-coord-slice';
-import errorSlice from './error-slice';
+import createStore from 'redux-zero';
 
-const store = configureStore({
-  reducer: {
-    currentWeather: currentWeatherSlice.reducer,
-    searchWeather: searchSlice.reducer,
-    weeklyWeather: weeklyWeatherSlice.reducer,
-    coordData: coordSlice.reducer,
-    errorData: errorSlice.reducer,
-  },
-});
+const initialState = {
+  cityName: 'Ha Noi',
+  coord: { lat: 21.0245, lon: 105.8412 },
+  currentWeather: {},
+  todayWeather: {},
+  dailyWeather: [],
+  hourlyWeather: [],
+  errorMessage: null,
+};
+
+const store = createStore(initialState);
 
 export default store;

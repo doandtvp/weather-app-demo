@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { searchActions } from '../../store/search-slice';
-import classes from './CurrentCity.module.css';
 import heavyRain from '../../images/CurrentCity/heavy-rain.jpg';
+import classes from './CurrentCity.module.css';
+import { connect } from 'redux-zero/react';
+import actions from '../../store/actions';
 import useConvertTime from '../../hooks/use-convert-time';
-import { fetchCurrentWeather } from '../../store/fetchCurrentWeatherAction';
 
-function CurrentCity() {
-  const dispatch = useDispatch();
+const mapToProps = (state) => state;
+
+function CurrentCity({
+  cityName,
+  currentWeather,
+  getCityName,
+  getCoord,
+  handleError,
+}) {
   const [search, setSearch] = useState('');
 
-  const cityName = useSelector((state) => state.currentWeather.cityName);
-
-  const currentWeatherData = useSelector(
-    (state) => state.currentWeather.weather
-  );
-
-  const currentTime = useConvertTime(currentWeatherData.date);
-  const unix_timestamp = currentWeatherData.date;
+  const currentTime = useConvertTime(currentWeather.date);
+  const unix_timestamp = currentWeather.date;
   let date = new Date(unix_timestamp * 1000);
 
   const days = [
@@ -29,17 +29,35 @@ function CurrentCity() {
     'Friday',
     'Saturday',
   ];
-
   let today = date.getDay();
 
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
+  async function fetchCurrentWeatherData(searchData) {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchData}&units=metric&appid=f1ca9b22e9abb2b40c57425354e02264`
+      );
+
+      if (!response.ok) {
+        throw new Error('Could not fetch weekly weather data!');
+      }
+
+      const data = await response.json();
+
+      getCityName(data.name);
+      getCoord(data.coord);
+      handleError('');
+    } catch (error) {
+      handleError('Not found city!');
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(searchActions.seacrhByCityName(search));
-    dispatch(fetchCurrentWeather(search));
+    fetchCurrentWeatherData(search);
     setSearch('');
   };
 
@@ -55,12 +73,12 @@ function CurrentCity() {
         />
       </form>
       <img
-        src={`https://openweathermap.org/img/wn/${currentWeatherData.icon}@2x.png`}
+        src={`https://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`}
         alt='weather-status'
       />
       <div className={classes.temp}>
         <p>{cityName}</p>
-        <p> {Math.round(currentWeatherData.temp)}°C</p>
+        <p> {Math.round(currentWeather.temp)}°C</p>
       </div>
 
       <div className={classes.timmer}>
@@ -70,9 +88,9 @@ function CurrentCity() {
       </div>
 
       <div className={classes.weather}>
-        <p>{currentWeatherData.description}</p>
+        <p>{currentWeather.description}</p>
         <p>
-          {currentWeatherData.mainWeather} {currentWeatherData.status}%
+          {currentWeather.mainWeather} {currentWeather.status}%
         </p>
       </div>
 
@@ -86,4 +104,4 @@ function CurrentCity() {
   );
 }
 
-export default CurrentCity;
+export default connect(mapToProps, actions)(CurrentCity);
