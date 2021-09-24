@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux-zero/react';
 import classes from './WeekWeather.module.css';
 import DetailWeather from '../DetailWeather/DetailWeather';
 
 function WeekWeather() {
-  const dailyWeatherData = useSelector(
-    (state) => state.weeklyWeather.dailyWeather
-  );
+  const dailyWeatherData = useSelector((state) => state.dailyWeather);
 
-  const initialState = useSelector(
-    (state) => state.weeklyWeather.dailyWeather[0]
-  );
-
-  const initialActiveState = useSelector(
-    (state) => state.weeklyWeather.dailyWeather[0].dt
-  );
-
+  const initialState = useSelector((state) => state.dailyWeather[0]);
   const [detailWeather, setDetailWeather] = useState(initialState);
+
+  const initialActiveState = useSelector((state) => state.dailyWeather[0].dt);
   const [active, setActive] = useState(initialActiveState);
 
   const getDetailWeather = (dt) => {

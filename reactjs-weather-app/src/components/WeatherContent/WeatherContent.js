@@ -3,7 +3,7 @@ import classes from './WeatherContent.module.css';
 import ErrorNotification from '../UI/ErrorNotification';
 import ContentNav from '../ContentNav/ContentNav';
 import Loading from '../UI/Loading';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux-zero/react';
 
 const TodayWeather = React.lazy(() => import('../TodayWeather/TodayWeather'));
 const WeekWeather = React.lazy(() => import('../WeekWeather/WeekWeather'));
@@ -11,7 +11,7 @@ const WeatherChart = React.lazy(() => import('../WeatherChart/WeatherChart'));
 
 function WeatherContent() {
   const [tabs, setTabs] = useState(1);
-  const error = useSelector((state) => state.errorData.error);
+  const error = useSelector((state) => state.errorMessage);
 
   const getActiveTabs = (index) => {
     setTabs(index);
