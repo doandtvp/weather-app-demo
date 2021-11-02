@@ -5,20 +5,41 @@ import actions from './store/actions';
 
 const Container = React.lazy(() => import('./components/Container/Container'));
 
-const mapToProps = (state) => state;
+interface StoreProps {
+  coord: { lat: number; lon: number };
+  getCurrentWeather: Function;
+  getTodayWeather: Function;
+  getDailyWeather: Function;
+  getHourlyWeather: Function;
+  handleError: Function;
+}
 
-function App({
-  coord,
-  getCurrentWeather,
-  getTodayWeather,
-  getDailyWeather,
-  getHourlyWeather,
-  handleError,
-}) {
-  const fetchWeeklyWeatherData = async (coordData) => {
+interface InitialState {
+  cityName: string;
+  coord: { lat: number; lon: number };
+  currentWeather: {};
+  todayWeather: {};
+  dailyWeather: [];
+  hourlyWeather: [];
+  errorMessage: string;
+}
+
+const mapToProps = (state: InitialState) => state;
+
+function App(props: StoreProps) {
+  const {
+    coord,
+    getCurrentWeather,
+    getTodayWeather,
+    getDailyWeather,
+    getHourlyWeather,
+    handleError,
+  } = props;
+
+  const fetchWeeklyWeatherData = async () => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${coordData.lat}&lon=${coordData.lon}&units=metric&exclude=minutely,alerts&appid=f1ca9b22e9abb2b40c57425354e02264`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=metric&exclude=minutely,alerts&appid=f1ca9b22e9abb2b40c57425354e02264`
       );
 
       if (!response.ok) {
@@ -46,11 +67,11 @@ function App({
   };
 
   useEffect(() => {
-    fetchWeeklyWeatherData(coord);
+    fetchWeeklyWeatherData();
   }, [coord]);
 
   return (
-    <div className='app'>
+    <div className="app">
       <Suspense fallback={<Loading />}>
         <Container />
       </Suspense>

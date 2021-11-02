@@ -5,15 +5,37 @@ import { connect } from 'redux-zero/react';
 import actions from '../../store/actions';
 import useConvertTime from '../../hooks/use-convert-time';
 
-const mapToProps = (state) => state;
+interface StoreProps {
+  cityName: string;
+  currentWeather: {
+    date: number;
+    icon: string;
+    temp: number;
+    description: string;
+    mainWeather: string;
+    status: number;
+  };
+  getCityName: Function;
+  getCoord: Function;
+  handleError: Function;
+}
 
-function CurrentCity({
-  cityName,
-  currentWeather,
-  getCityName,
-  getCoord,
-  handleError,
-}) {
+interface InitialState {
+  cityName: string;
+  coord: { lat: number; lon: number };
+  currentWeather: {};
+  todayWeather: {};
+  dailyWeather: [];
+  hourlyWeather: [];
+  errorMessage: string;
+}
+
+const mapToProps = (state: InitialState) => state;
+
+function CurrentCity(props: StoreProps) {
+  const { cityName, currentWeather, getCityName, getCoord, handleError } =
+    props;
+
   const [search, setSearch] = useState('');
 
   const currentTime = useConvertTime(currentWeather.date);
@@ -31,11 +53,11 @@ function CurrentCity({
   ];
   let today = date.getDay();
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { value: string } }) => {
     setSearch(e.target.value);
   };
 
-  async function fetchCurrentWeatherData(searchData) {
+  async function fetchCurrentWeatherData(searchData: string) {
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${searchData}&units=metric&appid=f1ca9b22e9abb2b40c57425354e02264`
@@ -47,6 +69,8 @@ function CurrentCity({
 
       const data = await response.json();
 
+      console.log(data);
+
       getCityName(data.name);
       getCoord(data.coord);
       handleError('');
@@ -55,7 +79,7 @@ function CurrentCity({
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: Function }) => {
     e.preventDefault();
     fetchCurrentWeatherData(search);
     setSearch('');
@@ -66,15 +90,15 @@ function CurrentCity({
       <form onSubmit={handleSubmit} className={classes.form}>
         <input
           className={classes.input}
-          type='text'
+          type="text"
           value={search}
           onChange={handleChange}
-          placeholder='Search'
+          placeholder="Search"
         />
       </form>
       <img
         src={`https://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`}
-        alt='weather-status'
+        alt="weather-status"
       />
       <div className={classes.temp}>
         <p>{cityName}</p>
@@ -98,7 +122,7 @@ function CurrentCity({
         <div>
           <p>{cityName}</p>
         </div>
-        <img src={heavyRain} alt='weather-img' />
+        <img src={heavyRain} alt="weather-img" />
       </div>
     </div>
   );

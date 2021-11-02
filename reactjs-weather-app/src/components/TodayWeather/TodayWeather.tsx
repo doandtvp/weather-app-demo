@@ -8,7 +8,18 @@ import { IoMdSpeedometer } from 'react-icons/io';
 import { FaThermometerEmpty } from 'react-icons/fa';
 
 function TodayWeather() {
-  const todayWeatherData = useSelector((state) => state.todayWeather);
+  interface TodayWeather {
+    date: number;
+    icon: string;
+    temp: number;
+    description: string;
+    mainWeather: string;
+    status: number;
+  }
+
+  const todayWeatherData = useSelector(
+    (state: { todayWeather: TodayWeather }) => state.todayWeather
+  );
 
   const sunrise_timestamp = useConvertTime(todayWeatherData.sunrise);
   const sunset_timestamp = useConvertTime(todayWeatherData.sunset);

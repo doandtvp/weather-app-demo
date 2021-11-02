@@ -2,7 +2,25 @@ import React from 'react';
 import useConvertTime from '../../hooks/use-convert-time';
 import classes from './DetailWeather.module.css';
 
-function DetailWeather(props) {
+interface IDetailWeather {
+  detailWeather: {
+    wind_speed: number;
+    sunrise: number;
+    sunset: number;
+    dt: number;
+    temp: {
+      day: number;
+      min: number;
+      max: number;
+    };
+    humidity: number;
+    weather: [{ description: string }];
+
+    pressure: number;
+  };
+}
+
+function DetailWeather(props: IDetailWeather) {
   const detailWeather = props.detailWeather;
   const convertWindSpeed = (detailWeather.wind_speed * 3.6).toFixed(2);
   const sunrise_timestamp = useConvertTime(detailWeather.sunrise);

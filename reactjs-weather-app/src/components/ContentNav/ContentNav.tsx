@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import classes from './ContentNav.module.css';
 import userAvt from '../../images/ContentNav/user.png';
 
-function ContentNav(props) {
+function ContentNav(props: { getActiveTabs: Function }) {
   const [toggleTabs, setToggTabs] = useState(1);
 
-  const handleToggleTabs = (index) => {
+  const handleToggleTabs = (index: number) => {
     setToggTabs(index);
     props.getActiveTabs(index);
   };
@@ -26,7 +26,7 @@ function ContentNav(props) {
         </ul>
       </div>
       <div className={classes.user}>
-        <img src={userAvt} alt='user-img' />
+        <img src={userAvt} alt="user-img" />
       </div>
     </div>
   );

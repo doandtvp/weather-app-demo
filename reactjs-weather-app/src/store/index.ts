@@ -1,13 +1,23 @@
 import createStore from 'redux-zero';
 
-const initialState = {
+interface InitialState {
+  cityName: string;
+  coord: { lat: number; lon: number };
+  currentWeather: {};
+  todayWeather: {};
+  dailyWeather: [];
+  hourlyWeather: [];
+  errorMessage: string;
+}
+
+const initialState: InitialState = {
   cityName: 'Ha Noi',
   coord: { lat: 21.0245, lon: 105.8412 },
   currentWeather: {},
   todayWeather: {},
   dailyWeather: [],
   hourlyWeather: [],
-  errorMessage: null,
+  errorMessage: '',
 };
 
 const store = createStore(initialState);

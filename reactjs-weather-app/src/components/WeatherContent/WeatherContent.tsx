@@ -11,9 +11,11 @@ const WeatherChart = React.lazy(() => import('../WeatherChart/WeatherChart'));
 
 function WeatherContent() {
   const [tabs, setTabs] = useState(1);
-  const error = useSelector((state) => state.errorMessage);
+  const error = useSelector(
+    (state: { errorMessage: string }) => state.errorMessage
+  );
 
-  const getActiveTabs = (index) => {
+  const getActiveTabs = (index: number) => {
     setTabs(index);
   };
 
